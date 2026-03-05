@@ -1,7 +1,1 @@
-echo "Timestamp,% CPU (global),% CPU (user),% CPU (system)" > monitoreo_cpu.csv && \
-top -b -d 10 -n 540 | awk '/%Cpu/ {
-    "date +\"%Y-%m-%d %H:%M:%S\"" | getline t; 
-    us=$2; sy=$4; id=$8; 
-    gsub(",", ".", us); gsub(",", ".", sy); gsub(",", ".", id);
-    print t "," 100-id "," us "," sy
-}' >> monitoreo_cpu.csv
+echo "Timestamp,% CPU (global),% CPU (user),% CPU (system)" > monitoreo.csv && top -b -d 10 -n 540 | awk '/%Cpu/ {printf strftime("%H:%M:%S"); printf ",%.1f,%.1f,%.1f\n", 100-$8, $2, $4}' >> monitoreo.csv

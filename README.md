@@ -1,1 +1,1 @@
-echo "Timestamp,% CPU (global),% CPU (user),% CPU (system)" > monitoreo.csv && top -b -d 10 -n 540 | awk '/%Cpu/ {printf strftime("%H:%M:%S"); printf ",%.1f,%.1f,%.1f\n", 100-$8, $2, $4}' >> monitoreo.csv
+top -b -d 1 -n 5400 | grep -E "%Cpu\(s\)|KiB Mem" > monitoreo_recursos.txt

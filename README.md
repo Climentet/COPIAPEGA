@@ -1,1 +1,1 @@
-top -b -d 5 -n 1080 | grep --line-buffered -E "top -|%Cpu" > monitoreo_recursos.txt
+top -b -d 5 -n 1080 | awk '/top -/ {printf $3} /%Cpu/ {print ";" $2 ";" $4 ";" $2+$4}' | tr '.' ',' > monitoreo_español.csv

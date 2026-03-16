@@ -1,1 +1,1 @@
-top -b -d 1 -n 5400 | grep -E "%Cpu\(s\)|KiB Mem" > monitoreo_recursos.txt
+top -b -d 5 -n 1080 | grep --line-buffered -E "top -|%Cpu" > monitoreo_recursos.txt

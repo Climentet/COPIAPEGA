@@ -5,13 +5,11 @@ LC_ALL=C top -b -d 5 -n 1080 | awk '/top -/ {printf $3} /%Cpu/ {print ";" $2 ";"
 #!/bin/bash
 
 ARCHIVO="monitor_paralelo.csv"
-echo "Timestamp;% CPU (global);% Memoria Principal" > $ARCHIVO
 
-LC_ALL=C top -b -d 5 -n 1440 | awk '
-  /top -/ {hora=$3}
-  /%Cpu/ {cpu=$2+$4}
-  /Mem/ && !/Swap/ {
-    mem=($8/$4)*100
-    printf "%s;%.1f;%.1f\n", hora, cpu, mem
-  }
-' | tr '.' ',' >> $ARCHIVO
+# Escribimos la cabecera
+echo "Timestamp;% CPU (global);% Memoria Principal" > "$ARCHIVO"
+
+# Monitorización de 2 horas (1440 muestras cada 5 segundos) en una sola línea segura
+LC_ALL=C top -b -d 5 -n 1440 | awk '/top -/ {hora=$3} /%Cpu/ {cpu=$2+$4} /Mem/ && !/Swap/ {mem=($8/$4)*100; printf "%s;%.1f;%.1f\n", hora, cpu, mem}' | tr '.' ',' >> "$ARCHIVO"
+
+echo "Monitorización de 2 horas terminada. Datos guardados en $ARCHIVO"

@@ -5,10 +5,8 @@ LC_ALL=C top -b -d 5 -n 1080 | awk '/top -/ {printf $3} /%Cpu/ {print ";" $2 ";"
 
 ARCHIVO="monitor_paralelo.csv"
 
-# 1. Añadimos la nueva columna a la cabecera
 echo "Timestamp;% CPU (global);% Memoria Principal;Capacidad Utilizada" > "$ARCHIVO"
 
-# 2. Añadimos la variable $8 al printf para que salga en el CSV
 LC_ALL=C top -b -d 5 -n 1440 | awk '
   /top -/ {hora=$3}
   /%Cpu/ {cpu=$2+$4}

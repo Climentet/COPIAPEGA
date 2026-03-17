@@ -1,7 +1,9 @@
 #Calcul per sobreCarrega
+
 time { LC_ALL=C top -b -n 1 | awk '/top -/ {printf $3} /%Cpu/ {print ";" $2 ";" $4 ";" $2+$4}' | tr '.' ',' > /dev/null; }
 
 #Primer monitor cada 5 segons
+
 LC_ALL=C top -b -d 5 -n 1080 | awk '/top -/ {printf $3} /%Cpu/ {print ";" $2 ";" $4 ";" $2+$4}' | tr '.' ',' > monitoreo.csv
 
 
@@ -14,3 +16,12 @@ echo "Timestamp;% CPU (global);% Memoria Principal;Capacidad Utilizada" > "$ARCH
 LC_ALL=C top -b -d 5 -n 1440 | awk '/top -/ {hora=$3} /%Cpu/ {cpu=$2+$4} /Mem/ && !/Swap/ {mem=($8/$4)*100; printf "%s;%.1f;%.1f;%s\n", hora, cpu, mem, $8}' | tr '.' ',' >> "$ARCHIVO"
 
 echo "Monitorización terminada. Datos guardados en $ARCHIVO"
+
+
+
+
+
+
+
+
+time { LC_ALL=C top -b -n 1 | awk '/top -/ {hora=$3} /%Cpu/ {cpu=$2+$4} /Mem/ && !/Swap/ {mem=($8/$4)*100; printf "%s;%.1f;%.1f;%s\n", hora, cpu, mem, $8}' | tr '.' ',' > /dev/null; }

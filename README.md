@@ -1,4 +1,8 @@
-LC_ALL=C top -b -d 1 -n 5400 | awk '/top -/ {printf $3} /%Cpu/ {print ";" $2 ";" $4 ";" $2+$4}' | tr '.' ',' > monitoreo.csv
+#Calcul per sobreCarrega
+time { LC_ALL=C top -b -n 1 | awk '/top -/ {printf $3} /%Cpu/ {print ";" $2 ";" $4 ";" $2+$4}' | tr '.' ',' > /dev/null; }
+
+#Primer monitor cada 5 segons
+LC_ALL=C top -b -d 5 -n 1080 | awk '/top -/ {printf $3} /%Cpu/ {print ";" $2 ";" $4 ";" $2+$4}' | tr '.' ',' > monitoreo.csv
 
 
 #!/bin/bash
